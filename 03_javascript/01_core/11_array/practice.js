@@ -20,7 +20,7 @@ const total = stockProducts.reduce((sum, current) => {
 }, 0);
 
 // 이름이 '펜'인 상품
-const product = products.filter((product) => product.name === "펜");
+const product = products.find((product) => product.name === "펜");
 console.log(product);
 // 품절 상태(stock===0)인 상품이 하나라도 있는지 확인 -> some()
 const hasProduct = products.some((product) => product.stock === 0);
