@@ -14,7 +14,7 @@ stockProducts.sort((a, b) => a.price - b.price);
 const productsName = stockProducts.map((product) => product.name);
 console.log(productsName);  // ['파일', '노트']
 
-// 판매 가능한 상품만 담긴 배열이 stockProducts, 한 개씩 총액 더하는거니까 forEach() 사용
+// 판매 가능한 상품만 담긴 배열이 stockProducts, 한 개씩 총액 더하는거니까 reduce() 사용
 const total = stockProducts.reduce((sum, current) => {
     return sum + current.price;  // current가 객체 상태의 요소니까 current.price로 접근
 }, 0);
