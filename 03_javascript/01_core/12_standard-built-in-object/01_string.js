@@ -39,7 +39,10 @@ const tagParts = tags.split('#');
 console.log(tagParts);
 
 // 6. 배열 메서드로 빈 값 제외
-const tagList = tagParts.filter(tag => tag !== '');
-console.log(tagList);
+// const tagList = tagParts.filter(tag => tag !== '');
+// console.log(tagList);
 
-// 메서드 체이닝
+// 메서드 체이닝 방식
+const tagList = tags
+    .split('#')
+    .filter(tag => tag !== '');
