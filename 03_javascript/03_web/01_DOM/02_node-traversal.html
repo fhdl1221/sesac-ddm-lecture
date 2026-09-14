@@ -1,15 +1,17 @@
 <!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>node-traversal</title>
-</head>
-<body>
-    <h1>'HTML 가계도' 탐색하기</h1>
-    <pre>
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>node-traversal</title>
+    </head>
+    <body>
+        <h1>'HTML 가계도' 탐색하기</h1>
+        <pre>
         우리는 querySelector로 특정 요소를 찾은 뒤, 그 요소를 기준으로
         가족(부모, 자식, 형제) 요소를 찾아 나갈 수 있습니다.
 
@@ -17,16 +19,46 @@
         요소만 필요한 경우에는 이름에 `Element`가 들어간 탐색 프로퍼티를 사용합니다.
         </pre>
 
-    <ul id="family">
-        <!-- 이 주석과 줄바꿈도 노드입니다! -->
-        <li id="me">나 (기준)</li>
-        <li>나의 첫째 형제</li>
-        <li>나의 둘째 형제</li>
-    </ul>
+        <ul id="family">
+            <!-- 이 주석과 줄바꿈도 노드입니다! -->
+            <li id="me">나 (기준)</li>
+            <li>나의 첫째 형제</li>
+            <li>나의 둘째 형제</li>
+        </ul>
 
-    <script>
+        <script>
+            const $me = document.getElementById("me");
+            const $familly = document.getElementById("family");
+            // childNodes: 모든 '자식 요소'들을 NodeList로 반환(공백/텍스트/주석 노드 포함)
+            console.log($familly.childNodes);
 
-</script>
-</body>
+            console.log('====자식 요소 탐색====');
+            // children: 모든 '자식 요소'들을 HTMLCollection으로 반환(텍스트 노드 제외)
+            const $children = $familly.children;
+            console.log($children);
+            // firstElementChild: 첫 번쨰 '자식 요소' 반환
+            const $first = $familly.firstElementChild;
+            console.log($first);
+            $first.style.color = 'red';
+            // lastElementChild: 마지막 '자식 요소' 반환
+            const $last = $familly.lastElementChild;
+            console.log($last);
+
+            console.log('\n==== 부모 요소 탐색 ====');
+            // parentNode: 나의 '부모 노드' 반환
+            // HTML 요소를 기준으로 다룰 때는 parentElement도 자주 사용
+            const $parent = $me.parentNode;
+            console.log($parent);
+            $parent.style.border = '1px solid blue';
+
+            console.log('\n==== 형제 요소 탐색 ====');
+            // 다음 또는 이전 형제 요소가 없는 경우 null 반환
+            // nextElementSibling: 나의 '다음 형제 요소' 반환
+            const $next = $me.nextElementSibling;
+            console.log($next);
+            // previousElementSibling: 나의 '이전 형제 요소' 반환
+            const $prev = $me.previousElementSibling;
+            console.log($prev);
+        </script>
+    </body>
 </html>
-
