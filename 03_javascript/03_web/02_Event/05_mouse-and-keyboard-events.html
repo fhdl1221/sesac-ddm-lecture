@@ -1,47 +1,88 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>마우스와 키보드 이벤트</title>
-    <style>
-        .area {
-            background: lightgray; border: 1px solid black;
-            min-height: 100px; margin-top: 10px; padding: 10px;
-            white-space: pre-line;
-        }
-    </style>
-</head>
-<body>
-<h1>마우스와 키보드 이벤트</h1>
-<hr>
-<h3>1. 마우스 이벤트</h3>
-<pre>
+    <head>
+        <meta charset="UTF-8" />
+        <title>마우스와 키보드 이벤트</title>
+        <style>
+            .area {
+                background: lightgray;
+                border: 1px solid black;
+                min-height: 100px;
+                margin-top: 10px;
+                padding: 10px;
+                white-space: pre-line;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>마우스와 키보드 이벤트</h1>
+        <hr />
+        <h3>1. 마우스 이벤트</h3>
+        <pre>
     사용자의 마우스 움직임에 반응합니다.
     `click`(클릭), `dblclick`(더블클릭), `mousedown`(누를때), `mouseup`(뗄때), `mousemove`(움직일때) 등이 있습니다.
-    </pre>
+    </pre
+        >
 
-<button id="mouse-btn">여기를 클릭/우클릭 해보세요</button>
-<div id="mouse-area" class="area"></div>
-<script>
+        <button id="mouse-btn">여기를 클릭/우클릭 해보세요</button>
+        <div id="mouse-area" class="area"></div>
+        <script>
+            const $mouseBtn = document.getElementById("mouse-btn");
+            const $mouseArea = document.getElementById("mouse-area");
 
-</script>
+            // click : 마우스 왼쪽 버튼 눌렀다 뗐을 때 발생
+            $mouseBtn.addEventListener("click", (e) => {
+                $mouseArea.innerHTML += "click 이벤트 발생!<br>";
+            });
 
-<hr>
+            // mousedown : 마우스 버튼을 누르는 순간 발생
+            $mouseBtn.addEventListener("mousedown", (e) => {
+                // e.button : 0이면 마우스 왼쪽 버튼, 1이면 휠, 2면 오른쪽 버튼
+                $mouseArea.innerHTML += `mousedown 이벤트 발생! ${e.button}<br>`;
+            });
+        </script>
 
-<h3>2. 키보드 이벤트</h3>
-<pre>
+        <hr />
+
+        <h3>2. 키보드 이벤트</h3>
+        <pre>
     사용자의 키보드 입력에 반응합니다.
     - keydown: 키를 누르는 순간 (누르고 있는 동안 계속 발생)
     - keyup: 키에서 손을 떼는 순간
     - event.key: 입력된 문자를 알려줌 (ex: 'a', 'A', 'Enter')
     - event.code: 실제 물리적인 키 코드를 알려줌 (ex: 'KeyA', 'Enter')
-    </pre>
+    </pre
+        >
 
-<input type="text" id="keyboard-input" placeholder="아무 키나 입력하세요">
-<div id="keyboard-area" class="area"></div>
-<script>
+        <input
+            type="text"
+            id="keyboard-input"
+            placeholder="아무 키나 입력하세요"
+        />
+        <div id="keyboard-area" class="area"></div>
+        <script>
+            const $keyboardInput = document.getElementById("keyboard-input");
+            const $keyboardArea = document.getElementById("keyboard-area");
 
-</script>
-</body>
+            $keyboardInput.addEventListener("keydown", (e) => {
+                $keyboardArea.textContent = `keydown 이벤트 발생!
+                e.key: ${e.key}
+                e.code: ${e.code}`;
+
+                if (e.key === "Enter") {
+                    console.log("검색을 실행합니다");
+                }
+            });
+
+            $keyboardInput.addEventListener("keyup", (e) => {
+                $keyboardArea.textContent = `keyup 이벤트 발생: ${e.code}`;
+            });
+
+            // 방금 누른 문자까지 반영된 최신 입력값을 처리해야 한다면
+            // 키보드 이벤트보다 input 이벤트가 더 적합나다
+            $keyboardInput.addEventListener('input', (e) => {
+                console.log(e.currentTarget.value);
+            })
+        </script>
+    </body>
 </html>
-

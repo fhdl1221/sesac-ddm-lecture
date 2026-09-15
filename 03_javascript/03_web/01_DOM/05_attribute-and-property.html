@@ -70,9 +70,9 @@
             $checkbox.type = "checkbox";
             $checkbox.setAttribute("checked", "");
 
-            console.log($checkbox.getAttribute("checked"));  // ''
+            console.log($checkbox.getAttribute("checked")); // ''
             // 프로퍼티로 읽기(boolean값 반환)
-            console.log($checkbox.checked);  // true
+            console.log($checkbox.checked); // true
             $checkbox.checked = false;
         </script>
 
@@ -100,8 +100,22 @@
         </ul>
 
         <script>
-            const $boardList = document.querySelector('.board-list');
-            
+            const $boardList = document.querySelector(".board-list");
+            $boardList.addEventListener("click", (e) => {
+                console.log(e.target);
+                if (e.target.tagName !== "li") return;
+
+                // dataset은 어트리뷰트에서는 케밥케이스, 가져와서 사용할 때는 카멜케이스
+                const boardId = e.target.dataset.boardId;
+                const categoryName = e.target.dataset.categoryName;
+
+                console.log(`선택한 게시글: ${boardId}, ${categoryName}`);
+
+                // 값을 추가, 변경할 수 있다
+                e.target.dataset.readStatus = 'read';
+                // 삭제
+                delete e.target.dataset.readStatus;
+            });
         </script>
     </body>
 </html>
