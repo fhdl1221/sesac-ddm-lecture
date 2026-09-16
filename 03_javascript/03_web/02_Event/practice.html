@@ -175,6 +175,7 @@
                 const $result = document.getElementById("count-result");
 
                 let count = 0;
+                // 함수로 선언하는 이유? 
                 function countEvent() {
                     count++;
                     $result.textContent = `클릭 횟수: ${count}`;
@@ -185,6 +186,7 @@
                 $stopBtn.addEventListener("click", () => {
                     $countBtn.removeEventListener("click", countEvent);
                 });
+                // remove를 하고 
             </script>
         </section>
 
