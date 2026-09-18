@@ -88,6 +88,12 @@
                 border: 1px solid #dfe4ea;
                 border-radius: 8px;
             }
+
+            .todo-item.checked span {
+                text-decoration: line-through;
+                color: #999;
+            }
+
             .todo-item button {
                 background: #d63031;
             }
@@ -103,9 +109,14 @@
             const { useState } = React;
 
             // 할 일 한 개를 화면에 표시하는 자식 컴포넌트
-            function TodoItem({ todo, onRemove }) {
+            function TodoItem({ todo, onRemove, onToggle }) {
                 return (
-                    <li className="todo-item">
+                    <li className={`todo-item ${todo.isDone ? "checked" : ""}`}>
+                        <input
+                            type="checkbox"
+                            checked={todo.isDone}
+                            onChange={() => onToggle(todo.id)}
+                        />
                         <span>{todo.text}</span>
                         <button onClick={() => onRemove(todo.id)}>삭제</button>
                     </li>
@@ -122,8 +133,8 @@
                 // { id: 1, text: 'React 복습하기' }
                 // { id: 2, text: 'Todo List 완성하기' }
                 const [todos, setTodos] = useState([
-                    { id: 1, text: "React 복습하기" },
-                    { id: 2, text: "Todo List 완성하기" },
+                    { id: 1, text: "React 복습하기", isDone: false },
+                    { id: 2, text: "Todo List 완성하기", isDone: false },
                 ]);
 
                 // TODO 5. 다음 할 일의 id로 사용할 nextId state를 만드세요. 초기값은 3입니다.
@@ -140,7 +151,11 @@
                     // TODO 9. 기존 todos를 직접 수정하지 말고 Spread 문법으로 새 할 일을 추가하세요.
                     // TODO 10. nextId를 1 증가시키고 inputText를 빈 문자열로 초기화하세요.
                     if (inputText.trim() === "") return;
-                    const newTodo = { id: nextId, text: inputText };
+                    const newTodo = {
+                        id: nextId,
+                        text: inputText,
+                        isDone: false,
+                    };
                     setTodos([...todos, newTodo]);
                     setNextId(nextId + 1);
                     setInputText("");
@@ -150,6 +165,27 @@
                     // TODO 11. filter를 사용해 전달받은 id와 다른 할 일만 남기세요.
                     const updateTodos = todos.filter((todo) => todo.id !== id);
                     setTodos(updateTodos);
+                };
+
+                const handleToggle = (id) => {
+                    // 1) todos.map(...)으로 새로운 배열을 만듭니다.
+                    // 2) todo.id === id인 항목을 찾습니다.
+                    // 3) 찾은 객체는 아래처럼 새 객체로 만듭니다.
+                    //    { ...todo, isDone: !todo.isDone }
+                    // 4) id가 다른 todo는 기존 객체를 그대로 반환합니다.
+                    // 5) 완성된 배열을 setTodos에 전달합니다.
+                    const isDoneTodos = todos.map((todo) => {
+                        if (todo.id === id) {
+                            return {
+                                ...todo,
+
+                                isDone: !todo.isDone,
+                            };
+                        }
+                        return todo;
+                    });
+
+                    setTodos(isDoneTodos);
                 };
 
                 return (
@@ -218,6 +254,7 @@
                                         key={todo.id}
                                         todo={todo}
                                         onRemove={handleRemove}
+                                        onToggle={handleToggle}
                                     />
                                 ))}
                             </ul>
