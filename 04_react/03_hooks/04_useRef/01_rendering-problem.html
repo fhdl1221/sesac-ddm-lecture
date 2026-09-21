@@ -32,7 +32,11 @@
 
                 /**
                  * .current 프로퍼티에 값을 저장한다
-                */
+                 * 값이 바뀌어도 리렌더링을 일으키지 않고, 리렌더링 되어도 값이 초기화되지 않는다
+                 *
+                 * 즉, 화면에는 즉시 반영하지 않아도 되지만 컴포넌트가 기억해야 하는 값에 적합하다
+                 * 예: 타이머id, 이전 값, DOM 요소 참조
+                 */
                 const countRef = useRef(0);
 
                 const increaseCount = () => {
@@ -44,14 +48,21 @@
                     console.log("지역 변수(variable) 값: ", variable);
                 };
 
+                const increaseCountRef = () => {
+                    countRef.current += 1;
+                    console.log("Ref(countRef) 값", countRef.current);
+                };
+
                 return (
                     <>
                         <h1>State: {count}</h1>
                         <h2>Variable: {variable}</h2>
+                        <h3>Ref: {countRef.current}</h3>
                         <button onClick={increaseCount}>State 증가</button>
                         <button onClick={increaseVariable}>
                             Variable 증가
                         </button>
+                        <button onClick={increaseCountRef}>Ref 증가</button>
                     </>
                 );
             }
