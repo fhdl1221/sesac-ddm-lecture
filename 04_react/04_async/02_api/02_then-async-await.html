@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>콘솔 확인</h1>
+        <script>
+            const API_URL = "https://jsonplaceholder.typicode.com/users";
+
+            // .then() 체이닝 사용
+            function fetchDataWithThen() {
+                fetch(API_URL)
+                    .then((response) => {
+                        console.log(response);
+                        // 실제 데이터본문(body) 추출하려면 .json() 호출
+                        // .json() 역시 Promise를 반환하므로, return해줘야 다음 .then에서 받을 수 있다
+                        if (!response.ok) {
+                            throw new Error(`HTTP error`);
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                    })
+                    .catch((error) => {
+                        console.error("error 발생");
+                    });
+            }
+
+            async function fetchDataWithAsyncAwait() {
+                console.log("async/await 방식으로 fetch 시작");
+
+                try {
+                    // 1단계 fetch가 완료되어 Response 객체가 올때까지 기다린다
+                    const response = await fetch(API_URL);
+                    console.log(response);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error!`);
+                    }
+
+                    // 2단계 .json()이 안료되어 실제 데이터가 올 때까지 기다림
+                    const data = await response.json();
+                    console.log(data);
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            fetchDataWithThen();
+        </script>
+    </body>
+</html>

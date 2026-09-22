@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+
+    <body>
+        <div id="root"></div>
+
+        <script type="text/babel">
+            const API_URL = "https://api.github.com/emojis";
+            const { useState, useEffect } = React;
+
+            // 사용자의 입력을 받고, '검색' 이벤트가 발생했음을 부모에게 알린다
+            // 자신이 무엇을 검색하는지 모른다
+            // 오직 부모에게 검색어를 전달한다
+            function SearchBox({ keywordSearch }) {
+                const [keyword, setKeyword] = useState("");
+
+                const handleSearch = () => {
+                    keywordSearch(keyword);
+                };
+
+                return (
+                    <>
+                        <input
+                            type="text"
+                            value={keyword}
+                            onChange={(e) => setKeyword(e.target.value)}
+                        />
+
+                        <button onClick={handleSearch}>검색</button>
+                    </>
+                );
+            }
+
+            // 부모가 주는 상태에 따라 화면을 다르게 보여준다
+            function ImageBox({ loading, imgUrl, error }) {
+                if (loading) {
+                    return <p>로딩중...</p>;
+                }
+
+                if (error) {
+                    return <p>{error}</p>;
+                }
+
+                if (!imgUrl) {
+                    return <p>이미지가 없습니다</p>;
+                }
+
+                return <img src={imgUrl} alt="emoji" />;
+            }
+
+            // 모든 데이터와 상태를 관리한다
+            // API 통신을 담당한다
+            function App() {
+                const [isLoading, setIsLoading] = useState(false);
+                const [emojis, setEmojis] = useState({});
+                const [imgUrl, setImgUrl] = useState("");
+                const [error, setError] = useState("");
+
+                // 컴포넌트가 처음 렌더링될 때 전체 이모지 목록을 한 번 가져오도록 작성함
+                useEffect(() => {
+                    const getEmojis = async () => {
+                        try {
+                            setIsLoading(true);
+
+                            const response = await axios.get(API_URL);
+
+                            setEmojis(response.data);
+                        } catch (error) {
+                            setError("이모지 목록을 가져오지 못했습니다.");
+                        } finally {
+                            setIsLoading(false);
+                        }
+                    };
+
+                    getEmojis();
+                }, []);
+
+                const handleSearch = (keyword) => {
+                    const searchKeyword = keyword.trim();
+
+                    if (!searchKeyword) {
+                        setError("이모지 이름을 입력하세요.");
+                        setImgUrl("");
+                        return;
+                    }
+
+                    setError("");
+                    setImgUrl("");
+                    setIsLoading(true);
+
+                    const emojiUrl = emojis[searchKeyword];
+
+                    if (!emojiUrl) {
+                        setError("해당 이모지를 찾을 수 없습니다.");
+                        setIsLoading(false);
+                        return;
+                    }
+
+                    setImgUrl(emojiUrl);
+                    setIsLoading(false);
+                };
+
+                return (
+                    <>
+                        <h1>이모지 검색</h1>
+
+                        <SearchBox keywordSearch={handleSearch} />
+                        <br />
+                        <ImageBox
+                            loading={isLoading}
+                            imgUrl={imgUrl}
+                            error={error}
+                        />
+                    </>
+                );
+            }
+
+            ReactDOM.createRoot(document.getElementById("root")).render(
+                <App />,
+            );
+        </script>
+    </body>
+</html>
