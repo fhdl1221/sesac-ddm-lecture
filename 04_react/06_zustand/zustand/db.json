@@ -1,0 +1,30 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "첫 번째 게시글",
+      "author": "판다"
+    },
+    {
+      "id": "2",
+      "title": "HTTP 요청 연습",
+      "author": "코알라"
+    },
+    {
+      "title": "새로운 게시글1790577153410",
+      "author": "익명",
+      "id": "LqpSpJyh19E"
+    },
+    {
+      "title": "새로운 게시글1790577158832",
+      "author": "익명",
+      "id": "NsF-HO1hfxA"
+    },
+    {
+      "title": "새로운 게시글1790580281042",
+      "author": "익명",
+      "id": "bWx45Ggxw6U"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
