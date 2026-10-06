@@ -1,0 +1,49 @@
+package com.lecture.section2.variable;
+
+public class Application2 {
+    public static void main(String[] args) {
+        /* 변수의 명명 규칙 */
+        // 1. 컴파일 에러 발생
+        /* 동일한 범위 내에서 동일한 변수명을 가질 수 없다 */
+        int age = 20;
+//        int age = 30;
+
+        /* 예약어 사용 불가(자바에서 미리 사용하겠다고 컴파일러와 약속한 키워드) */
+//        int true = 1;
+//        int for = 20;
+
+        /* 대소문자를 구분한다 */
+        int number = 10;
+        int Number = 10;
+
+        /* 숫자로 시작할 수 없다 */
+//        int 1age = 20;
+        int age1 = 20;
+
+        /* 특수기호는 '_'와 '$'만 사용가능 */
+//        int sh@Rp = 10;
+        int num_ber = 10;
+        int money$ = 20;
+
+        // 2. 컴파일 에러를 발생시키지는 않지만 암묵적 규칙
+        int dfdsfdsfjkdjkfjkskjkj;
+
+        /* 합성어로 이루어진 경우 첫 단어는 소문자, 두 번째 시작 단어는 대문자로 시작한다 (카멜케이스) */
+        int maxAge = 30;
+        int max_age = 20; // 단어와 단어 사이의 연결을 _로 하지 않는다
+
+        /* 변수명은 저장된 값이 어떤 의미를 가지는지 명확하게 표현하도록 한다 */
+        String s;
+        String name; // 이렇게
+
+        /* 전형적인 변수 이름이 있다면 가급적 사용 */
+        int sum = 0; // 합계
+        int max = 10; // 최대값
+        int min = 0; // 최소값
+        int count = 1; // 카운트할때
+
+        /* boolean은 의문문으로 가급적 긍정형태로 네이밍 */
+        boolean isTrue;
+        boolean isAlive;
+    }
+}
