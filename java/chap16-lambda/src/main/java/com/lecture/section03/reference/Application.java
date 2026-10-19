@@ -1,0 +1,42 @@
+package com.lecture.section03.reference;
+
+import java.util.function.*;
+
+public class Application {
+    public static void main(String[] args) {
+
+        /*
+        * [메소드 참조]
+        * 람다가 새로운 동작을 만들지 않고 이미 존재하는 메소드 하나를 그대로 호출할 때
+        * 그 호출을 ::으로 간결하게 표현하는 문법
+        * */
+
+        Function<String, Integer> parseInt = value -> Integer.parseInt(value);
+        System.out.println(parseInt.apply("123"));
+
+        // 클래스이름::정적메소드이름
+        Function<String, Integer> parseIntReference = Integer::parseInt;
+        System.out.println(parseIntReference.apply("123"));
+
+        Consumer<String> printer = message -> System.out.println(message);
+        Consumer<String> printerReference = System.out::println;
+
+        printer.accept("헬로 람다!");
+        printerReference.accept("헬로 메소드참조!");
+
+        // BiPredicate<T, U> : 값 두 개를 받아 boolean으로 반환
+        BiPredicate<String, String> sameText = (left, right) -> left.equals(right);
+        BiPredicate<String, String> sameTextReference = String::equals;
+
+        System.out.println(sameText.test("hello", "hello"));
+        System.out.println(sameTextReference.test("hello", "hello"));
+
+        Supplier<Account> newAccount = Account::new;
+        Function<String, Account> newAccountWithName = Account::new;
+        BiFunction<String, Integer, Account> newAccountWithNameReference = Account::new;
+
+        System.out.println(newAccount.get());
+        System.out.println(newAccountWithName.apply("홍길동"));
+        System.out.println(newAccountWithNameReference.apply("홍길동", 100000));
+    }
+}
