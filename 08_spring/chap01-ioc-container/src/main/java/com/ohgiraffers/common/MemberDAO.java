@@ -1,9 +1,13 @@
 package com.ohgiraffers.common;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /* 회원 정보를 메모리에 저장하고 조회·등록하는 수업용 DAO */
+/* bean 이름을 지정하지 않으면 클래스 이름의 첫글자를 소문자로 바꿔 bean으로 등록(memberDAO)*/
+@Component
 public class MemberDAO {
 
     private final Map<Integer, MemberDTO> memberMap;

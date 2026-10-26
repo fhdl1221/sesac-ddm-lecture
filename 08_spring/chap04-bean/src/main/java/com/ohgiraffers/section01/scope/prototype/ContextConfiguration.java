@@ -6,6 +6,7 @@ import com.ohgiraffers.common.Product;
 import com.ohgiraffers.common.ShoppingCart;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import java.util.Date;
 
@@ -28,6 +29,8 @@ public class ContextConfiguration {
     }
 
     @Bean
+    /* prototype으로 설정된 bean은 getBean()으로 호출할 때마다 새로운 인스턴스 반환 */
+    @Scope("prototype")
     public ShoppingCart cart() {
         return new ShoppingCart();
     }

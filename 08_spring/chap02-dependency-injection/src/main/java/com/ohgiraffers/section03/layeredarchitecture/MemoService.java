@@ -6,6 +6,7 @@ public class MemoService {
 
     private final MemoRepository memoRepository;
 
+    /* 생성자 주입 */
     public MemoService(MemoRepository memoRepository) {
         this.memoRepository = memoRepository;
     }

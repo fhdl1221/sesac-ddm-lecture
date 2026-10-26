@@ -26,7 +26,7 @@ public class ContextConfiguration {
     public Product water() {
         return new Beverage("지리산암반수", 3000, 500);
     }
-
+    /* Spring Bean의 기본 범위는 singleton이다. */
     @Bean
     public ShoppingCart cart() {
         return new ShoppingCart();
